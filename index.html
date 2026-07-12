@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>四字熟絵</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- スマホ横画面警告 -->
+  <div id="rotate-warning" class="hidden">
+    横画面にしてください
+  </div>
+
+  <!-- 出題者交代アニメーション -->
+  <div id="role-change-overlay" class="hidden">
+    <div id="role-change-text"></div>
+  </div>
+
+  <!-- タイトル画面 -->
+  <div id="title-screen" class="screen">
+    <h1>四字熟絵</h1>
+
+    <div class="login-area">
+      <button id="google-login">Googleでログイン</button>
+      <button id="logout-btn">ログアウト</button>
+    </div>
+
+    <div class="mode-select">
+      <h2>モード選択</h2>
+      <label>
+        <input type="radio" name="mode" value="normal" checked>
+        通常モード
+      </label>
+      <label>
+        <input type="radio" name="mode" value="free">
+        フリーモード
+      </label>
+    </div>
+
+    <div class="room-create">
+      <h2>ルーム作成</h2>
+      <label>名前：</label>
+      <input id="player-name" type="text" placeholder="プレイヤー名">
+      <label>ルーム名：</label>
+      <input id="room-name" type="text" placeholder="ルーム名">
+      <button id="create-room-btn">ルーム作成</button>
+    </div>
+  </div>
+
+  <!-- 待機ルーム画面 -->
+  <div id="lobby-screen" class="screen hidden">
+    <h2>待機ルーム</h2>
+    <div id="room-info"></div>
+
+    <div id="player-icons"></div>
+
+    <div class="lobby-chat">
+      <h3>チャット</h3>
+      <div id="lobby-chat-log" class="chat-log"></div>
+      <input id="lobby-chat-input" type="text" placeholder="メッセージ">
+      <button id="lobby-chat-send">送信</button>
+    </div>
+
+    <button id="start-game-btn">ゲーム開始</button>
+    <button id="back-title-btn">タイトルに戻る</button>
+  </div>
+
+  <!-- ゲーム画面 -->
+  <div id="game-screen" class="screen hidden">
+    <h2>ゲーム</h2>
+
+    <div id="timer">120</div>
+
+    <div id="question-area">
+      <h3>問題</h3>
+      <div id="question-word"></div>
+      <div id="question-meaning"></div>
+    </div>
+
+    <div id="hint-area">
+      <h3>ヒント</h3>
+      <button id="hint1-btn">ヒント1（文字＋位置）</button>
+      <button id="hint2-btn">ヒント2（意味）</button>
+    </div>
+
+    <div id="draw-tools">
+      <label>色：</label>
+      <input type="color" id="draw-color" value="#000000">
+      <label>太さ：</label>
+      <input type="range" id="draw-width" min="1" max="10" value="3">
+      <button id="pen-btn">ペン</button>
+      <button id="eraser-btn">消しゴム</button>
+      <button id="undo-btn">Undo</button>
+      <button id="redo-btn">Redo</button>
+    </div>
+
+    <div class="canvas-area">
+      <div class="canvas-block">
+        <h3>出題欄</h3>
+        <canvas id="question-canvas" width="600" height="200"></canvas>
+      </div>
+      <div class="canvas-block">
+        <h3>回答欄</h3>
+        <canvas id="answer-canvas" width="600" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="answer-controls">
+      <input id="answer-text" type="text" placeholder="四字熟語を入力">
+      <button id="answer-send-btn">回答送信</button>
+    </div>
+
+    <div class="game-chat">
+      <h3>チャット</h3>
+      <div id="game-chat-log" class="chat-log"></div>
+      <input id="game-chat-input" type="text" placeholder="メッセージ">
+      <button id="game-chat-send">送信</button>
+    </div>
+
+    <div id="score-area">
+      <h3>スコア</h3>
+      <div id="score-log"></div>
+    </div>
+
+    <div id="result-area">
+      <h3>結果</h3>
+      <div id="result-log"></div>
+    </div>
+
+    <button id="show-ranking-btn">ランキングを見る</button>
+  </div>
+
+  <!-- ランキング画面 -->
+  <div id="ranking-screen" class="screen hidden">
+    <h2>ランキング</h2>
+    <div id="ranking-list"></div>
+    <button id="ranking-back">ゲームに戻る</button>
+  </div>
+
+  <!-- 最終ランキング画面 -->
+  <div id="final-ranking-screen" class="screen hidden">
+    <h2>最終ランキング</h2>
+    <div id="final-ranking-list"></div>
+    <button id="final-back">タイトルへ戻る</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="dictionary.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
